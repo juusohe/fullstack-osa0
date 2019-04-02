@@ -1,0 +1,64 @@
+title Uuden muistiinpanon luominen
+
+note over selain:
+Submit-painikkeen painaminen saa
+selaimen suorittamaan lomakkeen
+action-komennon (POST /new_note)
+ja lähettämään lomakkeen sisällön
+POST-requestin mukana.
+end note
+
+selain->palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note
+note over palvelin:
+Palvelin vastaanottaa muistiinpanon
+sisältämän tekstin POST-requestin
+Form Data -osiosta ja tallentaa sen.
+end note
+
+palvelin-->selain: 302 Found. Location: /notes
+
+note over selain:
+Selain siirtyy sivulta /new_note
+sivulle /notes koodin 302 vastaan-
+otettuaan.
+end note
+
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/notes
+palvelin-->selain: HTML-koodi
+
+note over selain:
+Selain parsii HTML-koodin ja löytää
+tiedostonimet "main.js" ja "main.css"
+koodista. Seuraavaksi selain pyytää
+näitä tiedostoja palvelimelta.
+end note
+
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+palvelin-->selain: main.css
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.js
+palvelin-->selain: main.js
+
+note over selain:
+Selain suorittaa tiedoston "main.js"
+sisältämän koodin. Koodi tekee AJAX-
+pyynnön osoitteeseen "/data.json".
+end note
+
+selain->palvelin: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+
+note over palvelin:
+Palvelin hakee muistiinpanot
+ja muodostaa tiedoston "data.json".
+end note
+
+palvelin-->selain: data.json: "[{"content":"HTML on helppoa","date":"201 ... ..."
+
+note over selain:
+Selaimessa pyörivä JavaScript-koodi
+vastaanottaa tiedoston "data.json".
+Tapahtumankäsittelijä muokkaa
+selaimessa näkyvää HTML-koodia
+dynaamisesti ja lisää siihen listan
+muistiinpanoja, mukaan lukien
+uusi muistiinpano.
+end note
